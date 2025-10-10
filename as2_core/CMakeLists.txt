@@ -59,6 +59,15 @@ endforeach()
 
 find_package(GeographicLib REQUIRED)
 
+# Work around GeographicLib CMake target not having Debug configuration
+# Extract the actual library path from the Release configuration
+get_target_property(GeographicLib_LIB_PATH GeographicLib::GeographicLib_SHARED IMPORTED_LOCATION_RELEASE)
+if(NOT GeographicLib_LIB_PATH)
+  # Fallback: find the library manually
+  find_library(GeographicLib_LIB_PATH NAMES GeographicLib)
+endif()
+message(STATUS "GeographicLib library path: ${GeographicLib_LIB_PATH}")
+
 # Pybind11
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 find_package(pybind11 REQUIRED)
@@ -82,8 +91,8 @@ set(SOURCE_CPP_FILES
 
 # Create the library
 add_library(${PROJECT_NAME} STATIC ${SOURCE_CPP_FILES})
-target_link_libraries(${PROJECT_NAME} yaml-cpp)
-target_link_libraries(${PROJECT_NAME} ${GeographicLib_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} yaml-cpp::yaml-cpp)
+target_link_libraries(${PROJECT_NAME} ${GeographicLib_LIB_PATH})
 
 # Mocks library
 set(MOCKS_LIBRARY_NAME mocks)
