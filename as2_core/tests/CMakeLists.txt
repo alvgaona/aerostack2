@@ -1,4 +1,5 @@
 find_package(ament_cmake_gtest REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 file(GLOB TEST_SOURCES *.cpp)
 
@@ -12,5 +13,5 @@ foreach(TEST_SOURCE ${TEST_SOURCES})
 
   ament_add_gtest(${TEST_NAME} ${TEST_SOURCE})
   ament_target_dependencies(${TEST_NAME} ${PROJECT_DEPENDENCIES})
-  target_link_libraries(${TEST_NAME} gtest_main ${PROJECT_NAME} yaml-cpp)
+  target_link_libraries(${TEST_NAME} ${PROJECT_NAME} yaml-cpp::yaml-cpp)
 endforeach()
