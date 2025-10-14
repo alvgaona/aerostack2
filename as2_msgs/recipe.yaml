@@ -4,6 +4,10 @@ package:
 
 source:
   path: ..
+  filter:
+    include:
+      - "as2_msgs/**"
+
 
 build:
   number: 1
