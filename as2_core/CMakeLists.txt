@@ -51,13 +51,12 @@ set(PROJECT_DEPENDENCIES
     yaml-cpp
     image_transport
     cv_bridge
-    geographic_msgs)
+    geographic_msgs
+    GeographicLib)
 
 foreach(DEPENDENCY ${PROJECT_DEPENDENCIES})
   find_package(${DEPENDENCY} REQUIRED)
 endforeach()
-
-find_package(GeographicLib REQUIRED)
 
 # Work around GeographicLib CMake target not having Debug configuration
 # Extract the actual library path from the Release configuration
