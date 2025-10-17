@@ -32,6 +32,7 @@
  *  \authors    David Perez Saura
  ********************************************************************************/
 
+#include <cstdint>
 #include "as2_core/utils/gps_utils.hpp"
 
 namespace as2
