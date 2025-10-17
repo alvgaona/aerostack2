@@ -13,7 +13,9 @@ build:
   number: 1
   skip: false
   script:
-    - colcon build --packages-select "as2_msgs" --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release -DPython3_EXECUTABLE=$PYTHON -DPython_EXECUTABLE=$PYTHON
+    - cmake -S as2_msgs -B build -G Ninja -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release -DPython3_EXECUTABLE=$PYTHON -DPython_EXECUTABLE=$PYTHON
+    - cmake --build build
+    - cmake --install build
 
 requirements:
   build:
@@ -21,7 +23,7 @@ requirements:
     - ${{ compiler('cxx') }}
     - cmake
     - make # [not win]
-    - ninja # [win]
+    - ninja
     - colcon-common-extensions
     - ros-humble-ament-cmake
     - ros-humble-rosidl-default-generators
