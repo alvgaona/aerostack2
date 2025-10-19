@@ -30,7 +30,6 @@ requirements:
     - ros-humble-ament-cmake-xmllint
     - ros-humble-ament-lint-auto
     - ros-humble-rmw-fastrtps-cpp
-    - ros-humble-as2-msgs
   host:
     - ros-humble-ament-cmake
     - ros-humble-rclcpp
@@ -49,7 +48,6 @@ requirements:
     - ros-humble-image-transport
     - ros-humble-cv-bridge
     - ros-humble-rmw-fastrtps-cpp
-    - ros-humble-as2-msgs
     - geographiclib-cpp
     - yaml-cpp
     - eigen
