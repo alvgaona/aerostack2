@@ -59,6 +59,7 @@ doc/html/
 ~
 .cache
 
+output/
 projects/
 log/
 logs/
