@@ -32,7 +32,6 @@
  *  \authors    David Perez Saura
  ********************************************************************************/
 
-#include <cstdint>
 #include "as2_core/utils/tf_utils.hpp"
 
 namespace as2

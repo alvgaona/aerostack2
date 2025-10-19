@@ -35,7 +35,6 @@
  *              Rafael Pérez Seguí
  ********************************************************************************/
 
-#include <cstdint>
 #include "as2_core/sensor.hpp"
 
 namespace as2
