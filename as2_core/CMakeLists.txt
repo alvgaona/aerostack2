@@ -18,6 +18,9 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # add -Wall -Wextra -pedantic
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
 
+# Add cstdint include for gtest bug
+add_compile_options(-include cstdint)
+
 # https://stackoverflow.com/a/73279950/9553849
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};/usr/share/cmake/geographiclib")
 
