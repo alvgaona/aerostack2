@@ -21,16 +21,9 @@ requirements:
     - ${{ compiler('c') }}
     - ${{ compiler('cxx') }}
     - cmake
-    - make
     - ninja
-    - colcon-common-extensions
-    - ros-humble-ament-cmake
-    - ros-humble-rosidl-default-generators
-    - ros-humble-ament-cmake-lint-cmake
-    - ros-humble-ament-cmake-xmllint
-    - ros-humble-ament-lint-auto
-    - ros-humble-rmw-fastrtps-cpp
   host:
+    - ros-humble-ament-lint-auto
     - ros-humble-ament-cmake
     - ros-humble-rclcpp
     - ros-humble-rclcpp-lifecycle
@@ -47,11 +40,50 @@ requirements:
     - ros-humble-tf2-geometry-msgs
     - ros-humble-image-transport
     - ros-humble-cv-bridge
-    - ros-humble-rmw-fastrtps-cpp
     - geographiclib-cpp
     - yaml-cpp
     - eigen
     - pybind11
+  run:
+    - ros-humble-rclcpp
+    - ros-humble-rclcpp-lifecycle
+    - ros-humble-rclcpp-action
+    - ros-humble-std-msgs
+    - ros-humble-nav-msgs
+    - ros-humble-sensor-msgs
+    - ros-humble-as2-msgs
+    - ros-humble-std-srvs
+    - ros-humble-geometry-msgs
+    - ros-humble-geographic-msgs
+    - ros-humble-tf2
+    - ros-humble-tf2-ros
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-image-transport
+    - ros-humble-cv-bridge
+    - geographiclib-cpp
+    - yaml-cpp
+    - eigen
+  run_exports:
+    strong:
+      - ${{ pin_subpackage('ros-humble-as2-core', exact=True) }}
+      - ros-humble-rclcpp
+      - ros-humble-rclcpp-lifecycle
+      - ros-humble-rclcpp-action
+      - ros-humble-std-msgs
+      - ros-humble-nav-msgs
+      - ros-humble-sensor-msgs
+      - ros-humble-as2-msgs
+      - ros-humble-std-srvs
+      - ros-humble-geometry-msgs
+      - ros-humble-geographic-msgs
+      - ros-humble-tf2
+      - ros-humble-tf2-ros
+      - ros-humble-tf2-geometry-msgs
+      - ros-humble-image-transport
+      - ros-humble-cv-bridge
+      - geographiclib-cpp
+      - yaml-cpp
+      - eigen
 
 tests:
   - script: exit 0

@@ -18,16 +18,12 @@ requirements:
     - ${{ compiler('c') }}
     - ${{ compiler('cxx') }}
     - cmake
-    - make
     - ninja
-    - colcon-common-extensions
+  host:
     - ros-humble-ament-cmake
     - ros-humble-rosidl-default-generators
     - ros-humble-ament-cmake-lint-cmake
     - ros-humble-ament-cmake-xmllint
-  host:
-    - ros-humble-ament-cmake
-    - ros-humble-rclcpp
     - ros-humble-std-msgs
     - ros-humble-geometry-msgs
     - ros-humble-geographic-msgs
@@ -35,7 +31,6 @@ requirements:
     - ros-humble-action-msgs
     - ros-humble-sensor-msgs
   run:
-    - ros-humble-rclcpp
     - ros-humble-std-msgs
     - ros-humble-geometry-msgs
     - ros-humble-geographic-msgs
