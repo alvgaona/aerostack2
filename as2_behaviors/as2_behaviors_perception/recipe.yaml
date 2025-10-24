@@ -1,0 +1,41 @@
+package:
+  name: "ros-humble-as2-behaviors-perception"
+  version: "1.1.3"
+source:
+  path: ..
+  filter:
+    include:
+      - "as2_behaviors_perception/**"
+build:
+  number: 1
+  skip: false
+  script:
+    - cmake -S as2_behaviors_perception -B build -G Ninja -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release -DPython3_EXECUTABLE=$PYTHON
+    - cmake --build build
+    - cmake --install build
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
+    - cmake
+    - ninja
+  host:
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-ros
+    - ros-humble-ament-lint-auto
+    - ros-humble-rclcpp-components
+    - ros-humble-cv-bridge
+    - ros-humble-as2-core
+    - ros-humble-as2-msgs
+    - ros-humble-as2-behavior
+    - eigen
+    - opencv
+  run:
+    - ros-humble-as2-behavior
+    - ros-humble-cv-bridge
+    - eigen
+    - opencv
+about:
+  homepage: "https://github.com/aerostack2/aerostack2"
+  summary: "Aerostack2 motion reference handlers package"
+  license: "BSD-3-Clause"

@@ -85,8 +85,8 @@ void DetectArucoMarkersBehavior::loadParameters()
   RCLCPP_INFO(get_logger(), "Params: aruco_size: %.3f m", aruco_size_);
 
   // TODO(david): Load dictionary from param
-  aruco_dict_ = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
-  // aruco_dict_ = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_5X5_1000);
+  aruco_dict_ = cv::makePtr<cv::aruco::Dictionary>(cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250));
+  // aruco_dict_ = cv::makePtr<cv::aruco::Dictionary>(cv::aruco::getPredefinedDictionary(cv::aruco::DICT_5X5_1000));
 }
 
 // SIMULATION
@@ -161,7 +161,7 @@ void DetectArucoMarkersBehavior::imageCallback(const sensor_msgs::msg::Image::Sh
   // init ArUco detection
   std::vector<int> marker_ids;
   std::vector<std::vector<cv::Point2f>> marker_corners, rejected_candidates;
-  cv::Ptr<cv::aruco::DetectorParameters> detector_params = cv::aruco::DetectorParameters::create();
+  cv::Ptr<cv::aruco::DetectorParameters> detector_params = cv::makePtr<cv::aruco::DetectorParameters>();
 
   // detect markers on the fisheye, it's no worth it to detect over the rectified image
   cv::aruco::detectMarkers(
