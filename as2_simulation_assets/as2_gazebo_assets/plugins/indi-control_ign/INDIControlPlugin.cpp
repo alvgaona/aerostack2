@@ -337,7 +337,7 @@ void MulticopterINDIControl::PreUpdate(
   double dt = std::chrono::duration_cast<std::chrono::duration<double>>(_info.dt).count();
 
   this->rotorVelocities = this->indiController.acro_to_motor_angular_velocity(
-    frameData->angularVelocityBody, thrust,
+    frameData->angular_vel, thrust,
     rpyRates, std::chrono::duration<double>(_info.dt).count());
 
   this->PublishRotorVelocities(_ecm, this->rotorVelocities);
