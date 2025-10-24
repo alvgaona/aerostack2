@@ -177,12 +177,12 @@ private:
 
 private:
   // Subscribers callbacks
-  void stateCallback(const geometry_msgs::msg::TwistStamped::SharedPtr msg);
-  void refPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
-  void refTwistCallback(const geometry_msgs::msg::TwistStamped::SharedPtr msg);
-  void refTrajCallback(const as2_msgs::msg::TrajectorySetpoints::SharedPtr msg);
-  void refThrustCallback(const as2_msgs::msg::Thrust::SharedPtr msg);
-  void platformInfoCallback(const as2_msgs::msg::PlatformInfo::SharedPtr msg);
+  void stateCallback(const geometry_msgs::msg::TwistStamped::ConstSharedPtr msg);
+  void refPoseCallback(const geometry_msgs::msg::PoseStamped::ConstSharedPtr msg);
+  void refTwistCallback(const geometry_msgs::msg::TwistStamped::ConstSharedPtr msg);
+  void refTrajCallback(const as2_msgs::msg::TrajectorySetpoints::ConstSharedPtr msg);
+  void refThrustCallback(const as2_msgs::msg::Thrust::ConstSharedPtr msg);
+  void platformInfoCallback(const as2_msgs::msg::PlatformInfo::ConstSharedPtr msg);
 
   // Services servers callbacks
   void setControlModeSrvCall(

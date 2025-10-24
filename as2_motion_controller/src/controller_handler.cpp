@@ -190,7 +190,7 @@ void ControllerHandler::reset()
 }
 
 void ControllerHandler::stateCallback(
-  const geometry_msgs::msg::TwistStamped::SharedPtr _twist_msg)
+  const geometry_msgs::msg::TwistStamped::ConstSharedPtr _twist_msg)
 {
   if (!control_mode_established_ || bypass_controller_) {
     return;
@@ -210,7 +210,7 @@ void ControllerHandler::stateCallback(
   return;
 }
 
-void ControllerHandler::refPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
+void ControllerHandler::refPoseCallback(const geometry_msgs::msg::PoseStamped::ConstSharedPtr msg)
 {
   if ((!control_mode_established_ && !bypass_controller_) ||
     control_mode_in_.control_mode == as2_msgs::msg::ControlMode::HOVER ||
@@ -234,7 +234,7 @@ void ControllerHandler::refPoseCallback(const geometry_msgs::msg::PoseStamped::S
   if (!bypass_controller_) {controller_ptr_->updateReference(ref_pose_);}
 }
 
-void ControllerHandler::refTwistCallback(const geometry_msgs::msg::TwistStamped::SharedPtr msg)
+void ControllerHandler::refTwistCallback(const geometry_msgs::msg::TwistStamped::ConstSharedPtr msg)
 {
   if ((!control_mode_established_ && !bypass_controller_) ||
     control_mode_in_.control_mode == as2_msgs::msg::ControlMode::HOVER ||
@@ -258,7 +258,7 @@ void ControllerHandler::refTwistCallback(const geometry_msgs::msg::TwistStamped:
   if (!bypass_controller_) {controller_ptr_->updateReference(ref_twist_);}
 }
 
-void ControllerHandler::refTrajCallback(const as2_msgs::msg::TrajectorySetpoints::SharedPtr msg)
+void ControllerHandler::refTrajCallback(const as2_msgs::msg::TrajectorySetpoints::ConstSharedPtr msg)
 {
   if ((!control_mode_established_ && !bypass_controller_) ||
     control_mode_in_.control_mode == as2_msgs::msg::ControlMode::HOVER ||
@@ -285,7 +285,7 @@ void ControllerHandler::refTrajCallback(const as2_msgs::msg::TrajectorySetpoints
   if (!bypass_controller_) {controller_ptr_->updateReference(ref_traj_);}
 }
 
-void ControllerHandler::refThrustCallback(const as2_msgs::msg::Thrust::SharedPtr msg)
+void ControllerHandler::refThrustCallback(const as2_msgs::msg::Thrust::ConstSharedPtr msg)
 {
   if ((!control_mode_established_ && !bypass_controller_) ||
     control_mode_in_.control_mode == as2_msgs::msg::ControlMode::HOVER ||
@@ -298,7 +298,7 @@ void ControllerHandler::refThrustCallback(const as2_msgs::msg::Thrust::SharedPtr
   if (!bypass_controller_) {controller_ptr_->updateReference(ref_thrust_);}
 }
 
-void ControllerHandler::platformInfoCallback(const as2_msgs::msg::PlatformInfo::SharedPtr msg)
+void ControllerHandler::platformInfoCallback(const as2_msgs::msg::PlatformInfo::ConstSharedPtr msg)
 {
   platform_info_ = *msg;
 }

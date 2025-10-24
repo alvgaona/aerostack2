@@ -106,8 +106,8 @@ public:
     const as2_msgs::msg::ControlMode & mode_in,
     const as2_msgs::msg::ControlMode & mode_out) override;
 
-  std::string getDesiredPoseFrameId();
-  std::string getDesiredTwistFrameId();
+  std::string getDesiredPoseFrameId() override;
+  std::string getDesiredTwistFrameId() override;
 
   bool computeOutput(
     double dt,
