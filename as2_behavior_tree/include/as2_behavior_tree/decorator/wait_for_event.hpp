@@ -65,7 +65,7 @@ private:
   BT::NodeStatus tick() override;
 
 private:
-  void callback(std_msgs::msg::String::SharedPtr msg);
+  void callback(std_msgs::msg::String::ConstSharedPtr msg);
 
 private:
   rclcpp::Node::SharedPtr node_;

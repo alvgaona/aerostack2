@@ -64,7 +64,7 @@ public:
   static BT::PortsList providedPorts() {return {};}
 
 private:
-  void stateCallback(as2_msgs::msg::PlatformInfo::SharedPtr msg)
+  void stateCallback(as2_msgs::msg::PlatformInfo::ConstSharedPtr msg)
   {
     is_flying_ = msg->status.state == as2_msgs::msg::PlatformStatus::FLYING;
   }

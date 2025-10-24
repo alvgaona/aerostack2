@@ -71,7 +71,7 @@ BT::NodeStatus WaitForEvent::tick()
   return BT::NodeStatus::RUNNING;
 }
 
-void WaitForEvent::callback(std_msgs::msg::String::SharedPtr msg)
+void WaitForEvent::callback(std_msgs::msg::String::ConstSharedPtr msg)
 {
   setOutput("result", msg->data);
   flag_ = true;

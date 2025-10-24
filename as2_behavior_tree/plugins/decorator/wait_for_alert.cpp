@@ -71,7 +71,7 @@ BT::NodeStatus WaitForAlert::tick()
   return BT::NodeStatus::RUNNING;
 }
 
-void WaitForAlert::callback(as2_msgs::msg::AlertEvent::SharedPtr msg)
+void WaitForAlert::callback(as2_msgs::msg::AlertEvent::ConstSharedPtr msg)
 {
   setOutput("alert", std::to_string(msg->alert));
   flag_ = true;
