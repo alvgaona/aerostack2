@@ -21,18 +21,26 @@ jobs:
             target-platform: osx-arm64
     steps:
       - uses: actions/checkout@v4
-      - name: Build as2_msgs conda package
+      - name: Build as2_msgs package
         id: build_msgs
         uses: prefix-dev/rattler-build-action@v0.2.34
         with:
           recipe-path: as2_msgs/recipe.yaml
           build-args: --target-platform ${{ matrix.target-platform }} --package-format tar-bz2 -c conda-forge -c robostack-staging
-          artifact-name: ros-humble-as2_msgs-${{ matrix.target-platform }}
+          artifact-name: ros-humble-as2-msgs-${{ matrix.target-platform }}
 
-      - name: Build as2_core conda package
+      - name: Build as2_core package
         id: build_core
         uses: prefix-dev/rattler-build-action@v0.2.34
         with:
           recipe-path: as2_core/recipe.yaml
           build-args: --target-platform ${{ matrix.target-platform }} --package-format tar-bz2 -c conda-forge -c robostack-staging
-          artifact-name: ros-humble-as2_core-${{ matrix.target-platform }}
+          artifact-name: ros-humble-as2-core-${{ matrix.target-platform }}
+
+      - name: Build as2_cli package
+        id: build_cli
+        uses: prefix-dev/rattler-build-action@v0.2.34
+        with:
+          recipe-path: as2_cli/recipe.yaml
+          build-args: --target-platform ${{ matrix.target-platform }} --package-format tar-bz2 -c conda-forge -c robostack-staging
+          artifact-name: ros-humble-as2-cli-${{ matrix.target-platform }}
