@@ -75,6 +75,7 @@ private:
 
 public:
   StateEstimatorBase() {}
+  virtual ~StateEstimatorBase() = default;
   void setup(
     as2::Node * node,
     std::shared_ptr<as2::tf::TfHandler> tf_handler,
