@@ -1,5 +1,4 @@
-name: Build as2_core and as2_msgs
-
+name: Build packages
 on:
   push:
     branches:
@@ -7,7 +6,6 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   build:
     name: Build packages
@@ -47,3 +45,11 @@ jobs:
           recipe-path: as2_cli/recipe.yaml
           build-args: --target-platform ${{ matrix.target-platform }} --package-format tar-bz2 -c conda-forge -c robostack-staging
           artifact-name: ros-humble-as2-cli-${{ matrix.target-platform }}
+
+      - name: Build as2_state_estimator package
+        id: build_cli
+        uses: prefix-dev/rattler-build-action@v0.2.34
+        with:
+          recipe-path: as2_state_estimator/recipe.yaml
+          build-args: --target-platform ${{ matrix.target-platform }} --package-format tar-bz2 -c conda-forge -c robostack-staging
+          artifact-name: ros-humble-as2-state-estimator-${{ matrix.target-platform }}
