@@ -75,7 +75,7 @@ BasicMotionReferenceHandler::BasicMotionReferenceHandler(
     // Subscriber
     controller_info_sub_ = node_ptr_->create_subscription<as2_msgs::msg::ControllerInfo>(
       namespace_ + as2_names::topics::controller::info, rclcpp::QoS(1),
-      [](const as2_msgs::msg::ControllerInfo::SharedPtr msg) {
+      [](const as2_msgs::msg::ControllerInfo::ConstSharedPtr msg) {
         current_mode_ = msg->input_control_mode;
       });
 
