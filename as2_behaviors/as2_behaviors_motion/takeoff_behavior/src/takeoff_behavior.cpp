@@ -116,7 +116,9 @@ TakeoffBehavior::TakeoffBehavior(const rclcpp::NodeOptions & options)
 
   twist_sub_ = this->create_subscription<geometry_msgs::msg::TwistStamped>(
     as2_names::topics::self_localization::twist, as2_names::topics::self_localization::qos,
-    std::bind(&TakeoffBehavior::state_callback, this, std::placeholders::_1));
+    [this](const geometry_msgs::msg::TwistStamped::SharedPtr msg) {
+      this->state_callback(msg);
+    });
 
   RCLCPP_DEBUG(this->get_logger(), "Takeoff Behavior ready!");
 }

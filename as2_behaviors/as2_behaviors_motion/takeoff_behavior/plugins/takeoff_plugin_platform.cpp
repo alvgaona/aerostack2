@@ -47,7 +47,7 @@ namespace takeoff_plugin_platform
 class Plugin : public takeoff_base::TakeoffBase
 {
 public:
-  void ownInit()
+  void ownInit() override
   {
     platform_takeoff_cli_ =
       node_ptr_->create_client<std_srvs::srv::SetBool>(as2_names::services::platform::takeoff);

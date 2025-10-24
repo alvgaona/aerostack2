@@ -47,7 +47,7 @@ private:
   std::shared_ptr<as2::motionReferenceHandlers::SpeedMotion> speed_motion_handler_ = nullptr;
 
 public:
-  void ownInit()
+  void ownInit() override
   {
     speed_motion_handler_ = std::make_shared<as2::motionReferenceHandlers::SpeedMotion>(node_ptr_);
 

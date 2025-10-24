@@ -47,7 +47,7 @@ namespace land_plugin_platform
 class Plugin : public land_base::LandBase
 {
 public:
-  void ownInit()
+  void ownInit() override
   {
     platform_land_cli_ =
       node_ptr_->create_client<std_srvs::srv::SetBool>(as2_names::services::platform::land);

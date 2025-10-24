@@ -86,11 +86,15 @@ FollowReferenceBehavior::FollowReferenceBehavior(const rclcpp::NodeOptions & opt
 
   twist_sub_ = this->create_subscription<geometry_msgs::msg::TwistStamped>(
     as2_names::topics::self_localization::twist, as2_names::topics::self_localization::qos,
-    std::bind(&FollowReferenceBehavior::state_callback, this, std::placeholders::_1));
+    [this](const geometry_msgs::msg::TwistStamped::SharedPtr msg) {
+      this->state_callback(msg);
+    });
 
   platform_info_sub_ = this->create_subscription<as2_msgs::msg::PlatformInfo>(
     as2_names::topics::platform::info, as2_names::topics::platform::qos,
-    std::bind(&FollowReferenceBehavior::platform_info_callback, this, std::placeholders::_1));
+    [this](const as2_msgs::msg::PlatformInfo::SharedPtr msg) {
+      this->platform_info_callback(msg);
+    });
 
   RCLCPP_DEBUG(this->get_logger(), "FollowReference Behavior ready!");
 }

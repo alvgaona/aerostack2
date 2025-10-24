@@ -57,7 +57,7 @@ class Plugin : public go_to_base::GoToBase
   using GoalHandleTrajectoryGenerator = rclcpp_action::ClientGoalHandle<TrajectoryGeneratorAction>;
 
 public:
-  void ownInit()
+  void ownInit() override
   {
     traj_gen_client_ = rclcpp_action::create_client<TrajectoryGeneratorAction>(
       node_ptr_, as2_names::actions::behaviors::trajectorygenerator);

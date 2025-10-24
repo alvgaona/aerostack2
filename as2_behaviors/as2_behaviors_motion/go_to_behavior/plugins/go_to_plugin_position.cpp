@@ -45,7 +45,7 @@ private:
   std::shared_ptr<as2::motionReferenceHandlers::PositionMotion> position_motion_handler_ = nullptr;
 
 public:
-  void ownInit()
+  void ownInit() override
   {
     position_motion_handler_ =
       std::make_shared<as2::motionReferenceHandlers::PositionMotion>(node_ptr_);

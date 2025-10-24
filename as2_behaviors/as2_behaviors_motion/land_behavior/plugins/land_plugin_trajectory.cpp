@@ -57,7 +57,7 @@ class Plugin : public land_base::LandBase
   using GoalHandleTrajectoryGenerator = rclcpp_action::ClientGoalHandle<TrajectoryGeneratorAction>;
 
 public:
-  void ownInit()
+  void ownInit() override
   {
     node_ptr_->declare_parameter<double>("land_speed_condition_percentage");
     node_ptr_->get_parameter("land_speed_condition_percentage", land_speed_condition_percentage_);
