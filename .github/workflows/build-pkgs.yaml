@@ -47,7 +47,7 @@ jobs:
           artifact-name: ros-humble-as2-cli-${{ matrix.target-platform }}
 
       - name: Build as2_state_estimator package
-        id: build_cli
+        id: build_state_estimator
         uses: prefix-dev/rattler-build-action@v0.2.34
         with:
           recipe-path: as2_state_estimator/recipe.yaml
