@@ -44,7 +44,6 @@ set(GZ_MSGS "ignition-msgs8")
 
 endif()
 
-
 find_package(${GZ_SIM} REQUIRED)
 find_package(${GZ_COMMON} REQUIRED COMPONENTS graphics)
 find_package(${GZ_MATH} REQUIRED)
@@ -53,7 +52,6 @@ find_package(${GZ_PLUGIN} REQUIRED COMPONENTS loader register)
 find_package(${GZ_RENDERING} REQUIRED)
 find_package(${GZ_MSGS} REQUIRED)
 # find_package(backward_ros REQUIRED)
-
 
 # find dependencies
 set(PROJECT_DEPENDENCIES
