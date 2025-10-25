@@ -33,6 +33,9 @@ build
 log
 install
 
+# Rattler build output
+output/
+
 # Visual Studio Code files
 .vscode
 
@@ -40,6 +43,12 @@ install
 .cproject
 .project
 .pydevproject
+
+# Zed Editor files
+.zed/
+
+# Pixi Editor files
+.pixi/
 
 # Python artifacts
 __pycache__/
@@ -59,7 +68,6 @@ doc/html/
 ~
 .cache
 
-output/
 projects/
 log/
 logs/
