@@ -61,15 +61,6 @@ foreach(DEPENDENCY ${PROJECT_DEPENDENCIES})
   find_package(${DEPENDENCY} REQUIRED)
 endforeach()
 
-# Work around GeographicLib CMake target not having Debug configuration
-# Extract the actual library path from the Release configuration
-get_target_property(GeographicLib_LIB_PATH GeographicLib::GeographicLib_SHARED IMPORTED_LOCATION_RELEASE)
-if(NOT GeographicLib_LIB_PATH)
-  # Fallback: find the library manually
-  find_library(GeographicLib_LIB_PATH NAMES GeographicLib)
-endif()
-message(STATUS "GeographicLib library path: ${GeographicLib_LIB_PATH}")
-
 # Pybind11
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 find_package(pybind11 REQUIRED)
