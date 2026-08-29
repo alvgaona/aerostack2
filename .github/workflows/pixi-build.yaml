@@ -21,9 +21,12 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
+      # PRs verify both distros on linux-64; every push to main still builds
+      # the full platform matrix, so cross-platform breakage is caught at
+      # merge time.
       matrix:
         env: [humble, jazzy]
-        platform: [linux-64, linux-aarch64, osx-arm64]
+        platform: ${{ github.event_name == 'pull_request' && fromJSON('["linux-64"]') || fromJSON('["linux-64", "linux-aarch64", "osx-arm64"]') }}
         include:
           - platform: linux-64
             runner: ubuntu-latest

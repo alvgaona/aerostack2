@@ -1,0 +1,30 @@
+name: changed-packages
+description: >-
+  Select the colcon packages a change set affects (plus their dependents)
+  via changed_packages.py. Pull requests diff against their base branch;
+  every other event selects the full workspace. Requires the repository to
+  be checked out (with history on pull requests, for the merge-base).
+
+outputs:
+  packages:
+    description: Space-separated colcon package names to build and test
+    value: ${{ steps.detect.outputs.packages }}
+  skip:
+    description: "'true' when no package is affected (docs-only change)"
+    value: ${{ steps.detect.outputs.skip }}
+  full_build:
+    description: "'true' when the full workspace is selected"
+    value: ${{ steps.detect.outputs.full_build }}
+
+runs:
+  using: composite
+  steps:
+    - id: detect
+      shell: bash
+      run: |
+        pip install --quiet colcon-common-extensions catkin_pkg
+        if [ "${{ github.event_name }}" = "pull_request" ]; then
+          python3 "${{ github.action_path }}/changed_packages.py" --base "origin/${{ github.base_ref }}"
+        else
+          python3 "${{ github.action_path }}/changed_packages.py" --all
+        fi
