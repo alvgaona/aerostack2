@@ -257,7 +257,14 @@ PyPI, and GitHub raw URLs before compiling anything).
 Rollout: run new-image and old-path workflows side by side on 2–3 PRs
 (temporary duplicate job), then delete the old steps.
 
-### 3.2 Test parallelism (biggest remaining lever after caching)
+### 3.2 Test parallelism
+
+> **Deprioritized by Phase 1 data:** with coverage stripped and ccache warm,
+> the full humble test phase measures **2m48s** at `parallel-workers: 1` —
+> tests were never the bottleneck. The build phase (15m37s at 72% ccache
+> hits: configure + link + misses) is, and Phase 2's package selection is
+> what removes it. Keep this section only as a reference if test volume
+> grows.
 
 Decision tree — investigate before changing:
 
@@ -398,7 +405,7 @@ list dedup. Each phase merges independently and is independently revertible.
 
 | # | Question | Blocks | Default if undecided |
 |---|---|---|---|
-| 1 | History of `parallel-workers: 1` — flaky tests or cargo cult? | 3.2 | Run the decision tree; let data decide |
-| 2 | OK to make jazzy + platform builds non-blocking on PRs? | 2.3 | Yes, with `paths`-based re-inclusion |
+| 1 | ~~History of `parallel-workers: 1`?~~ | — | Moot: tests measure 2m48s serial; not worth touching |
+| 2 | ~~Jazzy + platforms non-blocking on PRs?~~ | — | **Decided:** both distros gate every PR (package-scoped, linux-64); only the 6-repo platforms matrix and the pixi arm/osx platforms move to nightly/merge |
 | 3 | Where should nightly failures land? | 2.3 | Auto-issue, `ci-nightly` label, deduped |
 | 4 | Releases: bloom mechanics, lockstep versioning, or changelogs? | — | Separate track, planned once CI lands |
