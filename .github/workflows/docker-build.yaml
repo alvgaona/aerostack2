@@ -2,10 +2,21 @@ name: docker-build
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, review_requested, ready_for_review]
+    types: [opened, synchronize, reopened]
     branches:
       - main
+    # PR-level image builds only guard the docker config itself; source-level
+    # breakage inside the image is caught by docker-nightly on every push to
+    # main (the Dockerfiles COPY and colcon-build the whole tree either way).
+    paths:
+      - 'docker/**'
+      - '.github/workflows/docker-build.yaml'
   workflow_dispatch:
+
+# Cancel in-flight runs when a PR receives a new push; never cancel main builds.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   docker-build:
