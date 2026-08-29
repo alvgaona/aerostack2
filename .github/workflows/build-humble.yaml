@@ -2,12 +2,17 @@ name: humble
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, review_requested, ready_for_review]
+    types: [opened, synchronize, reopened]
     branches:
       - main
   push:
     branches:
       - main
+
+# Cancel in-flight runs when a PR receives a new push; never cancel main builds.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
