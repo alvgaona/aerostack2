@@ -18,7 +18,7 @@ concurrency:
 jobs:
   build:
     name: build-${{ matrix.env }}-${{ matrix.platform }}
-    runs-on: ${{ matrix.runner }}
+    runs-on: ${{ matrix.platform == 'linux-aarch64' && 'ubuntu-24.04-arm' || (matrix.platform == 'osx-arm64' && 'macos-14' || 'ubuntu-latest') }}
     strategy:
       fail-fast: false
       # PRs verify both distros on linux-64; every push to main still builds
@@ -27,13 +27,6 @@ jobs:
       matrix:
         env: [humble, jazzy]
         platform: ${{ github.event_name == 'pull_request' && fromJSON('["linux-64"]') || fromJSON('["linux-64", "linux-aarch64", "osx-arm64"]') }}
-        include:
-          - platform: linux-64
-            runner: ubuntu-latest
-          - platform: linux-aarch64
-            runner: ubuntu-24.04-arm
-          - platform: osx-arm64
-            runner: macos-14
 
     steps:
       - name: Checkout
