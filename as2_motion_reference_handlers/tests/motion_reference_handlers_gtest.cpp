@@ -191,7 +191,7 @@ TEST(MotionReferenceHandlersTest, ActuatorCommandsGoToThePlatform)
   as2::motionReferenceHandlers::PositionMotion position_handler(node.get());
 
   EXPECT_TRUE(
-    position_handler.sendPositionCommandWithYawAngle(
+    position_handler.sendPositionCommandWithYawAngleRenamed(
       "earth", 1.0, 2.0, 3.0, 0.0, "earth", 0.5, 0.5, 0.5));
 
   EXPECT_TRUE(
@@ -231,7 +231,7 @@ TEST(MotionReferenceHandlersTest, MotionReferencesGoToTheControllerByDefault)
   as2::motionReferenceHandlers::PositionMotion position_handler(node.get());
 
   EXPECT_TRUE(
-    position_handler.sendPositionCommandWithYawAngle(
+    position_handler.sendPositionCommandWithYawAngleRenamed(
       "earth", 1.0, 2.0, 3.0, 0.0, "earth", 0.5, 0.5, 0.5));
 
   EXPECT_TRUE(

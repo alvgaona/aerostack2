@@ -79,7 +79,7 @@ public:
   bool ownSendCommand();
 
   /**
-     * @brief sendPositionCommandWithYawAngle sends a position command to the
+     * @brief sendPositionCommandWithYawAngleRenamed sends a position command to the
      *       robot.
      *       The yaw angle is given in radians.
      *       The linear velocity limitation is given in m/s.
@@ -95,7 +95,7 @@ public:
      * @param vz linear velocity limitation in z direction.
      * @return true if the command was sent successfully, false otherwise.
      */
-  bool sendPositionCommandWithYawAngle(
+  bool sendPositionCommandWithYawAngleRenamed(
     const std::string & frame_id_pose,
     const float & x,
     const float & y,
@@ -107,7 +107,7 @@ public:
     const float & vz);
 
   /**
-     * @brief sendPositionCommandWithYawAngle sends a position command to the
+     * @brief sendPositionCommandWithYawAngleRenamed sends a position command to the
      *      robot.
      *      The yaw angle is given in a quaternion.
      *      The linear velocity is given in m/s.
@@ -123,7 +123,7 @@ public:
      * @param vz linear velocity limitation in z direction.
      * @return true if the command was sent successfully, false otherwise.
      */
-  bool sendPositionCommandWithYawAngle(
+  bool sendPositionCommandWithYawAngleRenamed(
     const std::string & frame_id_pose,
     const float & x,
     const float & y,
@@ -134,14 +134,14 @@ public:
     const float & vy,
     const float & vz);
   /**
-     * @brief sendPositionCommandWithYawAngle sends a position command to the
+     * @brief sendPositionCommandWithYawAngleRenamed sends a position command to the
      *     robot.
      *     The position command is sent in the frame id frame.
      * @param pose geometry_msgs::msg::PoseStamped with the desired position and yaw angle.
      * @param twist geometry_msgs::msg::TwistStamped with the desired linear velocity.
      * @return true if the command was sent successfully, false otherwise.
      */
-  bool sendPositionCommandWithYawAngle(
+  bool sendPositionCommandWithYawAngleRenamed(
     const geometry_msgs::msg::PoseStamped & pose,
     const geometry_msgs::msg::TwistStamped & twist);
 
