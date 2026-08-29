@@ -40,10 +40,11 @@ jobs:
         uses: prefix-dev/setup-pixi@v0.8.8
         with:
           pixi-version: v0.77.1
-          run-install: false
+          environments: ${{ matrix.env }}
+          # locked: fail if pixi.lock is out of date with the manifests
+          # instead of silently re-solving against whatever is latest.
+          locked: true
           cache: true
-
-      - name: Build workspace
-        # --locked: fail if pixi.lock is out of date with the manifests
-        # instead of silently re-solving against whatever is latest.
-        run: pixi install -e ${{ matrix.env }} --locked
+          # setup-pixi's cache key omits the environment name; add it so
+          # humble and jazzy jobs on the same arch don't collide.
+          cache-key: pixi-${{ matrix.env }}-
