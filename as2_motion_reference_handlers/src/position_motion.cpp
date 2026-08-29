@@ -56,7 +56,7 @@ bool PositionMotion::ownSendCommand()
   return send_pose && send_twist;
 }
 
-bool PositionMotion::sendPositionCommandWithYawAngle(
+bool PositionMotion::sendPositionCommandWithYawAngleRenamed(
   const std::string & frame_id_pose,
   const float & x,
   const float & y,
@@ -67,12 +67,12 @@ bool PositionMotion::sendPositionCommandWithYawAngle(
   const float & vy = 0.0f,
   const float & vz = 0.0f)
 {
-  return sendPositionCommandWithYawAngle(
+  return sendPositionCommandWithYawAngleRenamed(
     frame_id_pose, x, y, z, tf2::toMsg(tf2::Quaternion(tf2::Vector3(0, 0, 1), yaw_angle)),
     frame_id_twist, vx, vy, vz);
 }
 
-bool PositionMotion::sendPositionCommandWithYawAngle(
+bool PositionMotion::sendPositionCommandWithYawAngleRenamed(
   const std::string & frame_id_pose,
   const float & x,
   const float & y,
@@ -100,10 +100,10 @@ bool PositionMotion::sendPositionCommandWithYawAngle(
   pose_msg.header.stamp = stamp;
   twist_msg.header.stamp = stamp;
 
-  return sendPositionCommandWithYawAngle(pose_msg, twist_msg);
+  return sendPositionCommandWithYawAngleRenamed(pose_msg, twist_msg);
 }
 
-bool PositionMotion::sendPositionCommandWithYawAngle(
+bool PositionMotion::sendPositionCommandWithYawAngleRenamed(
   const geometry_msgs::msg::PoseStamped & pose,
   const geometry_msgs::msg::TwistStamped & twist)
 {
