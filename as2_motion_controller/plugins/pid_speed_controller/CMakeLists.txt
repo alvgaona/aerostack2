@@ -47,16 +47,21 @@ else()
   if(EXISTS ${LOCAL_PID_SRC}/CMakeLists.txt)
     message(STATUS "pid_controller: using local clone at ${LOCAL_PID_SRC}")
     add_subdirectory(${LOCAL_PID_SRC} ${CMAKE_BINARY_DIR}/pid_controller_build)
+    set(PID_CONTROLLER_INCLUDE_DIR ${LOCAL_PID_SRC}/include)
   else()
-    message(STATUS "pid_controller: cloning into ${LOCAL_PID_SRC}")
+    # Clone into the build tree (FetchContent's default). Cloning into the
+    # source tree breaks cached builds: populate stamps live in the build
+    # tree, so a cached build tree plus a fresh checkout disagree about
+    # whether the clone exists.
+    message(STATUS "pid_controller: fetching v1.0 into the build tree")
     include(FetchContent)
     fetchcontent_declare(
       pid_controller
       GIT_REPOSITORY https://github.com/RPS98/pid_controller.git
       GIT_TAG v1.0
-      SOURCE_DIR ${LOCAL_PID_SRC}
     )
     fetchcontent_makeavailable(pid_controller)
+    set(PID_CONTROLLER_INCLUDE_DIR ${pid_controller_SOURCE_DIR}/include)
   endif()
 endif()
 
@@ -65,8 +70,8 @@ include_directories(
   include/${PLUGIN_NAME}
   ${EIGEN3_INCLUDE_DIRS}
 
-  # pid_controller headers (vendored under thirdparties/)
-  ${_THIRDPARTIES_DIR}/pid_controller/include
+  # pid_controller headers (local clone or FetchContent build tree)
+  ${PID_CONTROLLER_INCLUDE_DIR}
 )
 
 set(SOURCE_CPP_FILES
