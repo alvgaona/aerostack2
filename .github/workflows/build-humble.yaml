@@ -36,7 +36,7 @@ jobs:
         with:
           required-ros-distributions: humble
       - name: build and test
-        uses: ros-tooling/action-ros-ci@v0.2
+        uses: ros-tooling/action-ros-ci@v0.4
         with:
           package-name: >
             aerostack2
@@ -121,7 +121,7 @@ jobs:
           echo "  $PLATFORM:\n    type: git\n    url: https://github.com/aerostack2/$PLATFORM.git\n    version:  main " >> $REPOS_PATH
           cat $REPOS_PATH
       - name: build and test ${{ matrix.repos }}
-        uses: ros-tooling/action-ros-ci@v0.3
+        uses: ros-tooling/action-ros-ci@v0.4
         with:
           package-name: >
             ${{ matrix.repos }}
