@@ -25,8 +25,10 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 # A change under any of these paths affects every package or CI itself.
+# Only executable CI config escalates, not e.g. docs under .github/.
 ESCALATE_PREFIXES = (
-    ".github/",
+    ".github/actions/",
+    ".github/workflows/",
     "aerostack2/",
     "as2_core/",
     "as2_msgs/",
