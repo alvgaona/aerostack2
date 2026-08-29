@@ -1,5 +1,6 @@
 [workspace]
 preview = ["pixi-build"]
+requires-pixi = ">=0.77"
 authors = ["Alvaro Gaona <alvgaona@gmail.com>"]
 channels = ["conda-forge"]
 name = "aerostack2"
