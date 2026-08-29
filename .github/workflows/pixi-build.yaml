@@ -39,8 +39,11 @@ jobs:
       - name: Install pixi
         uses: prefix-dev/setup-pixi@v0.8.8
         with:
-          pixi-version: v0.67.2
+          pixi-version: v0.77.1
           run-install: false
+          cache: true
 
       - name: Build workspace
-        run: pixi install -e ${{ matrix.env }}
+        # --locked: fail if pixi.lock is out of date with the manifests
+        # instead of silently re-solving against whatever is latest.
+        run: pixi install -e ${{ matrix.env }} --locked
