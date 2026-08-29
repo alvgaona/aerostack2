@@ -25,8 +25,10 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 # A change under any of these paths affects every package or CI itself.
+# Only executable CI config escalates, not e.g. docs under .github/.
 ESCALATE_PREFIXES = (
-    ".github/",
+    ".github/actions/",
+    ".github/workflows/",
     "aerostack2/",
     "as2_core/",
     "as2_msgs/",
@@ -48,7 +50,11 @@ def all_packages() -> list[str]:
 
 def with_dependents(packages: set[str]) -> list[str]:
     out = run("colcon", "list", "--names-only", "--packages-above", *sorted(packages))
-    return sorted(set(out.split()))
+    # The aerostack2 metapackage depends on every package, so dependents
+    # expansion always includes it -- and the build runs --packages-up-to,
+    # which would pull the whole workspace back in. It builds nothing itself;
+    # keep it out of scoped selections.
+    return sorted(set(out.split()) - {"aerostack2"})
 
 
 def nearest_package(path: Path) -> str | None:
