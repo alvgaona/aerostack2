@@ -452,3 +452,4 @@ CallbackReturn Geozones::on_shutdown(const rclcpp_lifecycle::State & _state)
 
   return CallbackReturn::SUCCESS;
 }
+// Dummy change to exercise the per-package pixi CI. Do not merge.
