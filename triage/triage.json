@@ -1,0 +1,24 @@
+{
+ "1": {
+  "verified": "Confirmed on main. alertEvent() (aerial_platform.cpp:340) returns for alert > 0 and only handles KILL_SWITCH and EMERGENCY_HOVER; it's non-virtual. No other C++/Python code in the repo reacts to FORCE_LAND, FORCE_HOVER or EMERGENCY_LAND.",
+  "notes": "When filed, link: #3 (no way out of EMERGENCY) -> #1030; #125 (kill switch leaves armed) -> #1030; #92 (geozones resend alert) -> #1031; #95 (__send_emergency never returns) -> #1032.",
+  "decision": "file (3 issues)",
+  "issue": "#1030 emergency land, #1031 force hover/land, #1032 Python methods"
+ },
+ "2": {
+  "verified": "Confirmed. ControlMode.msg: POSITION=2, BODY_RATES=6. control_modes.yaml bit code: position=0b0110, body_rates=0b0010. Converted in control_mode_utils.cpp, so no runtime bug.",
+  "decision": "file (enhancement)",
+  "issue": "#1033"
+ },
+ "3": {
+  "verified": "Confirmed. platform_state_machine.cpp has 5 transitions into EMERGENCY and none out; sendCommand() calls ownStopPlatform() every cycle in EMERGENCY.",
+  "decision": "file (bug)",
+  "issue": "#1034",
+  "notes": "Link from bug 4 when filed."
+ },
+ "4": {
+  "verified": "Confirmed. takeoff/land on_execution_end send EMERGENCY on anything but SUCCESS; deactivate() ends as ABORTED.",
+  "decision": "drafted, not filed",
+  "notes": "Draft: issues/004-cancel-takeoff-land.md. Related #1034."
+ }
+}
