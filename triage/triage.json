@@ -20,5 +20,19 @@
   "verified": "Confirmed. takeoff/land on_execution_end send EMERGENCY on anything but SUCCESS; deactivate() ends as ABORTED.",
   "decision": "drafted, not filed",
   "notes": "Draft: issues/004-cancel-takeoff-land.md. Related #1034."
+ },
+ "5": {
+  "verified": "Partly wrong in BUGS.md: on upstream main Humble and Jazzy build the same list, and both skip as2_behaviors_param_estimation and as2_behaviors_payload. Same bug as #113.",
+  "decision": "drop",
+  "notes": "Covered by the CI architecture overhaul the user is doing in several branches (new ci.yaml discovers every package except the metapackage)."
+ },
+ "113": {
+  "decision": "drop (duplicate of #5)",
+  "notes": "Covered by the CI overhaul."
+ },
+ "6": {
+  "verified": "Confirmed by reading (not run). takeoff_plugin_platform calls the platform_takeoff service; AerialPlatform::takeoff() sends TOOK_OFF on success, then TakeoffBehavior::on_execution_end sends TOOK_OFF again (FLYING + TOOK_OFF is invalid). Same for land/LANDED.",
+  "decision": "drafted, not filed",
+  "notes": "Draft: issues/006-double-final-event.md. Related: #67 (platform_takeoff/land services skip TAKE_OFF/LAND)."
  }
 }

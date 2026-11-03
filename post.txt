@@ -1,0 +1,92 @@
+Hey all,
+
+We've added two tools to Aerostack2 to keep commit history readable and to catch style problems before they reach review. For now they're **recommended and opt-in**. Starting on November 5th, CI will check them on every pull request, so this is a good time to set them up.
+
+### What's changing
+
+**1. Conventional Commits, checked by commitlint**
+
+Commit messages and PR titles should follow [Conventional Commits](https://www.conventionalcommits.org):
+
+```
+<type>(<optional scope>): <short description>
+```
+
+Examples:
+
+```
+feat: add a filterable TF listener
+fix(as2_behaviors_motion): handle empty trajectories
+docs: describe commit conventions and local hooks
+ci: label pull requests by changed files
+```
+
+Common types are `feat`, `fix`, `docs`, `refactor`, `test`, `build`, `ci`, `chore` and `perf`. The scope is optional and has no fixed list.
+
+Since PRs are squash-merged, **the PR title becomes the commit on `main`**, so it needs to follow the format too.
+
+**2. The `[<package>]` prefix is deprecated**
+
+Please stop starting PR titles and commit messages with the package name in brackets:
+
+```diff
+- [as2_state_estimator] Add simple_ekf: a 15-state EKF plugin
++ feat: add simple_ekf, a 15-state EKF plugin for the state estimator
+```
+
+PRs now get **GitHub labels automatically** from the files they change (e.g. `core`, `state-estimator`, `behavior`, `motion-controller`), using a labeler workflow. You can filter PRs by package with these labels, so the title doesn't need to say it.
+
+If you do want to name the package in a commit message, put it in the scope: `fix(as2_core): ...`. Only add a scope when it helps, for example when the description would be unclear without it.
+
+**3. Local git hooks, run by lefthook**
+
+[lefthook](https://lefthook.dev) runs two checks when you commit:
+
+- **commit-msg**: commitlint checks your message.
+- **pre-commit**: the ament linters run on your *staged files only*. That means `uncrustify`, `cpplint`, `flake8`, `pep257` and `xmllint`, with the same rules and exclusions as the package tests. Uncrustify is pinned to 0.72, the version Humble ships, so local formatting matches the buildfarm.
+
+All of these tools come from a separate `lint` pixi environment. You don't need a workspace build or a ROS install to use it.
+
+### Setup (once per clone)
+
+```sh
+pixi run -e lint lefthook install
+```
+
+That's all. To lint the whole repository instead of just your staged changes:
+
+```sh
+pixi run -e lint lefthook run pre-commit --all-files
+```
+
+### Why
+
+- **Readable history.** You can see at a glance what a commit does.
+- **Changelogs and releases.** Structured commits let us generate release notes automatically.
+- **Faster reviews.** Style problems get fixed on your machine, not in review comments or failed CI runs.
+- Agents can easily track previous work and rationale about past changes by visiting associated PRs.
+
+### What enforcement will look like
+
+From November 5th, CI will:
+
+- check that PR titles follow Conventional Commits, so a `[<package>]` prefix will fail
+- run the same linters on changed files
+
+Existing commits and open PRs won't be rewritten. If your PR is open when enforcement starts, you may just need to edit its title.
+
+### FAQ
+
+**I need to commit something quickly and the hook is in the way.**
+`git commit --no-verify` skips the hooks. CI will still run the checks later, so this only postpones the fix.
+
+**How do I find PRs for one package now?**
+Filter by label, for example `is:pr label:state-estimator`.
+
+**Do I need to install pixi?**
+Yes, for the hooks. See https://pixi.sh. If you can't use it, you can skip the hooks, but CI will still check your PR.
+
+Questions, problems or suggestions? Reply in this thread.
+
+Best,
+Alvaro
