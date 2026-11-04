@@ -1,0 +1,10 @@
+<library path="as2_video_image_transport">
+  <class name="image_transport/h264_pub" type="as2_video::H264Publisher"
+    base_class_type="image_transport::PublisherPlugin">
+    <description>Encodes images as an H.264 stream with hardware encoding when available.</description>
+  </class>
+  <class name="image_transport/h264_sub" type="as2_video::H264Subscriber"
+    base_class_type="image_transport::SubscriberPlugin">
+    <description>Decodes an H.264 stream back into bgr8 images.</description>
+  </class>
+</library>
