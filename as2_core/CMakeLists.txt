@@ -28,13 +28,15 @@ elseif(ROS_DISTRO STREQUAL "humble")
 elseif(ROS_DISTRO STREQUAL "jazzy")
   option(ROS_JAZZY "ROS Jazzy" ON)
 endif()
+# Generated into the build tree, so builds for different distros do not overwrite each other
+set(GENERATED_INCLUDE_DIR "${PROJECT_BINARY_DIR}/include")
 configure_file(
   "${PROJECT_SOURCE_DIR}/include/as2_core/custom/tf2_geometry_msgs.hpp.in"
-  "${PROJECT_SOURCE_DIR}/include/as2_core/custom/tf2_geometry_msgs.hpp"
+  "${GENERATED_INCLUDE_DIR}/as2_core/custom/tf2_geometry_msgs.hpp"
 )
 configure_file(
   "${PROJECT_SOURCE_DIR}/include/as2_core/custom/cv_bridge.hpp.in"
-  "${PROJECT_SOURCE_DIR}/include/as2_core/custom/cv_bridge.hpp"
+  "${GENERATED_INCLUDE_DIR}/as2_core/custom/cv_bridge.hpp"
 )
 # find dependencies
 set(PROJECT_DEPENDENCIES
@@ -101,6 +103,7 @@ target_include_directories(
   ${PROJECT_NAME}
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${GENERATED_INCLUDE_DIR}>
     $<INSTALL_INTERFACE:include>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}
@@ -118,6 +121,7 @@ ament_export_libraries(${PROJECT_NAME})
 pybind11_add_module(as2_names src/_as2_core_pybind11.cpp)
 target_include_directories(as2_names PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${GENERATED_INCLUDE_DIR}
 )
 target_link_libraries(as2_names PRIVATE
   rclcpp::rclcpp
@@ -135,7 +139,8 @@ if(BUILD_TESTING)
   add_subdirectory(tests)
 endif()
 
-install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY include/ DESTINATION include PATTERN "*.hpp.in" EXCLUDE)
+install(DIRECTORY ${GENERATED_INCLUDE_DIR}/ DESTINATION include)
 
 install(
   TARGETS ${PROJECT_NAME} ${MOCKS_LIBRARY_NAME}
