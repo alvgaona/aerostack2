@@ -28,3 +28,4 @@ We difference between Inmediate, Recurrent and Regular (or goal oriented) behavi
 - Inmediate: act like a service, they dont give Fb and cannot be paused or modified.
 - Recurrent: they give feedback until they are stopped or paused.
 - Goal Oriented: they keep runing until a termination condition is met.
+
