@@ -66,6 +66,7 @@ jobs:
             as2_rviz_plugins
             as2_state_estimator
             as2_usb_camera_interface
+            as2_video
             as2_visualization
           target-ros2-distro: humble
           colcon-defaults: |
