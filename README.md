@@ -1,8 +1,7 @@
-<p align="center">
-  <img src="aerostack2/docs/images/Aerostack2_logo_resize.png" alt="Aerostack2" width="400">
-</p>
-
-<p align="center"><strong>Build and fly aerial robots on ROS 2.</strong></p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/banner-dark.svg">
+  <img src=".github/assets/banner-light.svg" alt="Aerostack2: build and fly aerial robots on ROS 2" width="100%">
+</picture>
 
 <p align="center">
   <a href="https://aerostack2.vercel.app"><img src="https://img.shields.io/badge/docs-aerostack2-blue" alt="Docs"></a>
