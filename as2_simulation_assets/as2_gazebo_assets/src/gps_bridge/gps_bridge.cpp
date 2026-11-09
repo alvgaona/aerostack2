@@ -84,14 +84,16 @@ GPSBridge::GPSBridge()
   this->declare_parameter<std::string>("sensor_type");
   this->get_parameter("sensor_type", sensor_type);
 
+  // Publisher first: the gz callback can fire as soon as Subscribe returns
+  gps_pub_ = this->create_publisher<sensor_msgs::msg::NavSatFix>(
+    as2_names::topics::sensor_measurements::gps, as2_names::topics::sensor_measurements::qos);
+
   // Initialize the ignition node
   ign_node_ptr_ = std::make_shared<gz::transport::Node>();
   std::string gps_topic = "/world/" + world_name + "/model/" + name_space + "/model/" +
     sensor_name + "/link/" + link_name + "/sensor/" + sensor_type +
     "/navsat";
   ign_node_ptr_->Subscribe(gps_topic, this->ignitionGPSCallback);
-  gps_pub_ = this->create_publisher<sensor_msgs::msg::NavSatFix>(
-    as2_names::topics::sensor_measurements::gps, as2_names::topics::sensor_measurements::qos);
 }
 
 std::string GPSBridge::replace_delimiter(
