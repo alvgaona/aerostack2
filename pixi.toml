@@ -46,9 +46,12 @@ ros-humble-ament-cpplint = "*"
 ros-humble-ament-flake8 = "*"
 ros-humble-ament-pep257 = "*"
 ros-humble-ament-xmllint = "*"
+doxygen = "*"
 
 [feature.lint.tasks]
 check-coverage-dev = "python .github/scripts/check_coverage_dev.py"
+# Report-only: prints undocumented header API to stderr.
+check-docs = { cmd = "doxygen Doxyfile.lint", cwd = "aerostack2" }
 
 [feature.coverage]
 channels = ["robostack-humble", "conda-forge"]

@@ -1,0 +1,11 @@
+# Doc lint: warnings only, headers only. Used by the check-docs pixi task.
+@INCLUDE               = Doxyfile
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_NO_PARAMDOC       = YES
+GENERATE_HTML          = NO
+GENERATE_LATEX         = NO
+GENERATE_XML           = NO
+FILE_PATTERNS          = *.h *.hh *.hpp *.hxx
+EXCLUDE_PATTERNS       = */build/* */install/* */log/* */tests/* */test/* \
+                         */cmake/* */_* */.* */thirdparty/* */thirdparties/*

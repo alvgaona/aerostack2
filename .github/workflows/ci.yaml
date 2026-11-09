@@ -44,3 +44,43 @@ jobs:
       exclude-packages: aerostack2
       apt-packages: ${{ matrix.apt-packages || '' }}
       external-repos: ${{ matrix.platforms }}
+
+  # Report only: shows how much header API is undocumented, never fails.
+  docs:
+    name: docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pixi
+        uses: prefix-dev/setup-pixi@v0.11.2
+        with:
+          pixi-version: v0.83.0
+          environments: lint
+          locked: true
+
+      - name: Run Doxygen
+        run: pixi run -e lint check-docs 2> warnings.log
+
+      - name: Report
+        run: |
+          grep ': warning:' warnings.log || true
+          total=$(grep -c ': warning:' warnings.log || true)
+          {
+            echo "## Doxygen: $total warnings in headers"
+            echo
+            echo "Report only, nothing fails. Run \`pixi run -e lint check-docs\` to see them locally."
+            echo
+            echo "| Package | Warnings |"
+            echo "| --- | ---: |"
+            find . -name package.xml -not -path './.pixi/*' -exec dirname {} \; | sed 's#^\./##' \
+              | awk -v root="$PWD/" '
+                  NR == FNR { pkgs[$0]; next }
+                  /: warning:/ {
+                    f = $0; sub(/:[0-9]+: warning:.*/, "", f); sub(root, "", f); p = "(no file)"
+                    for (d in pkgs) if (index(f, d "/") == 1 && length(d) > length(m)) { m = d }
+                    if (m != "") { p = m; n = split(m, a, "/"); p = a[n] }
+                    c[p]++; m = ""
+                  }
+                  END { for (p in c) printf "| %s | %d |\n", p, c[p] }' - warnings.log | sort -t'|' -k3 -rn
+          } >> "$GITHUB_STEP_SUMMARY"
