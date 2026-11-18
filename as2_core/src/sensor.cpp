@@ -157,7 +157,6 @@ const rclcpp::Node * TFDynamic::getNode() const
 // GenericSensor
 
 GenericSensor::GenericSensor(as2::Node * node_ptr, const float pub_freq)
-:  pub_freq_(pub_freq)
 {
   if (pub_freq > 0.0f) {
     timer_ = node_ptr->create_timer(
@@ -173,14 +172,12 @@ GenericSensor::~GenericSensor()
 
 void GenericSensor::dataUpdated()
 {
-  if (pub_freq_ <= 0.0f) {
-    publishData();
-  }
-  // else: Timer will publish the data
+  writeData([] {});
 }
 
 void GenericSensor::timerCallback()
 {
+  std::lock_guard<std::mutex> lock(data_mutex_);
   publishData();
 }
 
@@ -259,13 +256,13 @@ void Camera::updateData(const sensor_msgs::msg::Image & img)
     setup();
   }
 
-  image_data_ = img;
-  // Update timestamp
-  camera_info_.header.stamp = img.header.stamp;
-  // Add frame_id
-  image_data_.header.frame_id = camera_link_frame_;
-  camera_info_.header.frame_id = camera_link_frame_;
-  dataUpdated();
+  writeData(
+    [&] {
+      image_data_ = img;
+      camera_info_.header.stamp = img.header.stamp;
+      image_data_.header.frame_id = camera_link_frame_;
+      camera_info_.header.frame_id = camera_link_frame_;
+    });
 }
 
 void Camera::updateData(const cv::Mat & img)
@@ -400,23 +397,23 @@ GroundTruth::~GroundTruth()
 
 void GroundTruth::updateData(const geometry_msgs::msg::PoseStamped & pose_msg)
 {
-  pose_sensor_->setData(pose_msg);
-  dataUpdated();
+  writeData([&] {pose_sensor_->setData(pose_msg);});
 }
 
 void GroundTruth::updateData(const geometry_msgs::msg::TwistStamped & twist_msg)
 {
-  twist_sensor_->setData(twist_msg);
-  dataUpdated();
+  writeData([&] {twist_sensor_->setData(twist_msg);});
 }
 
 void GroundTruth::updateData(
   const geometry_msgs::msg::PoseStamped & pose_msg,
   const geometry_msgs::msg::TwistStamped & twist_msg)
 {
-  pose_sensor_->setData(pose_msg);
-  twist_sensor_->setData(twist_msg);
-  dataUpdated();
+  writeData(
+    [&] {
+      pose_sensor_->setData(pose_msg);
+      twist_sensor_->setData(twist_msg);
+    });
 }
 
 void GroundTruth::publishData()
@@ -461,15 +458,17 @@ void Gimbal::setGimbalBaseTransform(
 
 void Gimbal::updateData(const geometry_msgs::msg::PoseStamped & pose_msg)
 {
-  SensorData<geometry_msgs::msg::PoseStamped>::setData(pose_msg);
-  gimbal_transform_.header.stamp = pose_msg.header.stamp;
-  gimbal_transform_.header.frame_id = gimbal_base_frame_id_;
-  gimbal_transform_.child_frame_id = gimbal_frame_id_;
-  gimbal_transform_.transform.translation.x = pose_msg.pose.position.x;
-  gimbal_transform_.transform.translation.y = pose_msg.pose.position.y;
-  gimbal_transform_.transform.translation.z = pose_msg.pose.position.z;
-  gimbal_transform_.transform.rotation = pose_msg.pose.orientation;
-  GenericSensor::dataUpdated();
+  writeData(
+    [&] {
+      SensorData<geometry_msgs::msg::PoseStamped>::setData(pose_msg);
+      gimbal_transform_.header.stamp = pose_msg.header.stamp;
+      gimbal_transform_.header.frame_id = gimbal_base_frame_id_;
+      gimbal_transform_.child_frame_id = gimbal_frame_id_;
+      gimbal_transform_.transform.translation.x = pose_msg.pose.position.x;
+      gimbal_transform_.transform.translation.y = pose_msg.pose.position.y;
+      gimbal_transform_.transform.translation.z = pose_msg.pose.position.z;
+      gimbal_transform_.transform.rotation = pose_msg.pose.orientation;
+    });
 }
 
 void Gimbal::updateData(const geometry_msgs::msg::QuaternionStamped & orientation_msg)

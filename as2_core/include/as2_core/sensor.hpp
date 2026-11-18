@@ -43,6 +43,7 @@
 #include <chrono>
 #include <functional>
 #include <memory>
+#include <mutex>
 #include <string>
 #include <vector>
 #include <image_transport/camera_publisher.hpp>
@@ -365,6 +366,9 @@ public:
 
   /**
    * @brief User must call this function when the data is updated
+   *
+   * Data written before this call is not protected from the publication timer. Write it
+   * inside writeData(write) instead.
   */
   void dataUpdated();
 
@@ -373,9 +377,25 @@ public:
   */
   virtual void publishData() = 0;
 
+protected:
+  /**
+   * @brief Run write() and publish the data as one step, safe from the publication timer
+   *
+   * @param write Callable that updates the data to publish
+  */
+  template<typename F>
+  void writeData(F && write)
+  {
+    std::lock_guard<std::mutex> lock(data_mutex_);
+    write();
+    if (!timer_) {
+      publishData();
+    }
+  }
+
 private:
   rclcpp::TimerBase::SharedPtr timer_;
-  float pub_freq_;
+  std::mutex data_mutex_;
 
   /**
    * @brief Callback function for the timer. Publishes the data
@@ -450,8 +470,7 @@ public:
   */
   void updateData(const T & msg)
   {
-    SensorData<T>::setData(msg);
-    dataUpdated();
+    writeData([&] {SensorData<T>::setData(msg);});
   }
 
 protected:
