@@ -1,19 +1,42 @@
-name: Feature Request
-description: Tell us about your great new idea
-title: "[as2_pkg] <title> "
+name: Feature request
+description: Propose a new feature, package or architecture change
 labels: ["enhancement"]
 body:
-  - type: textarea
-    id: feature-description
+  - type: markdown
     attributes:
-      label: Feature Description
-      description: Is your feature request related to a problem? Please describe. Add any other context or screenshots about the feature request here.
-      placeholder: A clear and concise description of what the problem is.
+      value: |
+        New features need an agreed design before any pull request. Pull requests without one are closed. For an early idea, start an [Ideas discussion](https://github.com/aerostack2/aerostack2/discussions/categories/ideas) instead.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What you are trying to do and why Aerostack2 doesn't support it today.
     validations:
       required: true
   - type: textarea
-    id: implementation-considerations
+    id: proposal
     attributes:
-      label: Implementation Considerations
-      description: Please add here any important implementation consideration.
-      placeholder: A clear and concise description of any alternative solutions or features you've considered.
+      label: Proposal
+      description: How it would work. Name the packages, interfaces, messages or parameters it adds or changes.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: Other approaches you considered, including what you can do today without this change.
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Breaking changes, effect on the external platform repositories, extra dependencies.
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Will you implement it?
+      options:
+        - Yes, once the design is agreed
+        - I can help
+        - No
+    validations:
+      required: true

@@ -1,73 +1,82 @@
-name: Bug Report
-description: Create a report to help us improve
-title: "[as2_pkg] <title> "
+name: Bug report
+description: Something in Aerostack2 doesn't work as documented
 labels: ["bug"]
 body:
-  - type: dropdown
-    id: ros2
+  - type: markdown
     attributes:
-      label: ROS2 Version
-      description: What version of ROS2 are you running?
-      options:
-        - humble
-        - other
+      value: |
+        Search [open and closed issues](https://github.com/aerostack2/aerostack2/issues?q=is%3Aissue) first. If an open issue matches, react with 👍 instead of opening a new one. Report one bug per issue.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you saw and what you expected instead.
     validations:
       required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: The minimal commands, launch files and config needed to see the bug. Link a repository or project if it helps.
+      placeholder: |
+        1. ros2 launch ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Relevant terminal output. It is formatted as code automatically.
+      render: shell
   - type: dropdown
+    id: distro
+    attributes:
+      label: ROS 2 distro
+      options:
+        - Humble
+        - Jazzy
+        - Other
+    validations:
+      required: true
+  - type: input
     id: version
     attributes:
-      label: Version
-      description: What version of Aerostack2 are you running?
-      options:
-        - main
-        - v1.0.9
-        - v1.0.8
-        - v1.0.7
-        - v1.0.6
-        - v1.0.5
-        - specific branch
+      label: Aerostack2 version
+      description: Release, or branch and commit when built from source.
+      placeholder: 1.1.3, or main at abc1234
     validations:
       required: true
   - type: dropdown
     id: installation
     attributes:
       label: Installation
-      description: What installation method did you use?
       options:
-        - binaries
-        - source
-        - docker
+        - Binaries (apt)
+        - Source
+        - Docker
+        - Pixi
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Aerial platform
+      multiple: true
+      options:
+        - Gazebo
+        - Multirotor simulator
+        - PX4
+        - Crazyflie
+        - Tello
+        - DJI
+        - Other
+        - Not platform related
     validations:
       required: true
   - type: textarea
-    id: what-happened
+    id: environment
     attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Describe the bug here.
-      value: "A bug happened!"
-    validations:
-      required: true
-  - type: textarea
-    id: setup
-    attributes:
-      label: How to reproduce your issue?
-      description: Tell us, how to reproduce the issue.
-      placeholder: Describe the steps to reproduce the bug.
-      value: "I use Ubuntu 22.04, Gazebo Fortress, using project ..."
-    validations:
-      required: true
-  - type: textarea
-    id: logs
-    attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
-      render: shell
-#  - type: checkboxes
-#    id: terms
-#    attributes:
-#      label: Code of Conduct
-#      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
-#      options:
-#        - label: I agree to follow this project's Code of Conduct
-#          required: true
+      label: Environment
+      description: OS, simulator version, hardware, anything else that may matter.
+      placeholder: Ubuntu 22.04, Gazebo Harmonic

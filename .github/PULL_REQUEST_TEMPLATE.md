@@ -1,37 +1,26 @@
-<!-- Please fill out the following pull request template for non-trivial changes to help us process your PR faster and more efficiently.-->
+<!-- Title: Conventional Commits, for example `fix(as2_core): handle empty frame ids`. See CONTRIBUTING.md. -->
 
----
+## Summary
 
-## Basic Info
+<!-- What changes and why. One concern per pull request. -->
 
-| Info | Please fill out this column |
-| ------ | ----------- |
-| Issue(s) this addresses   | (add issues here #1) |
-| ROS2 version tested on | (Humble, Other) |
-| Aerial platform tested on | (Gazebo, Crazyflie, Tello, PX4, DJI, Multirotor Simulator, Other) |
-| AI tools used | (None, or the tool and what it did, see [AI_POLICY.md](https://github.com/aerostack2/aerostack2/blob/main/AI_POLICY.md)) |
+<!-- Link the related issue. "Fixes #123" closes it on merge, a plain "#123" only links it. A bug fix without an issue describes the bug and how to reproduce it here. -->
 
----
+## Testing
 
-## Description of contribution in a few bullet points
+<!-- Only what you actually ran. See AI_POLICY.md. -->
 
-<!--
-* Added this neat new feature
-* Also fixed a typo in a parameter name in as2_motion_controller_manager
--->
+- ROS 2 distro: <!-- Humble, Jazzy -->
+- Aerial platform: <!-- Gazebo, Multirotor simulator, PX4, Crazyflie, Tello, DJI, none -->
+- How: <!-- commands, launch files, tests added -->
 
-## Description of documentation updates required from your changes
+## AI usage
 
-<!--
-* Added new parameter, so need to add that to default configs and documentation page
-* Added some capabilities, need to document them
--->
+<!-- None, or the tool and what it did. -->
 
----
+## Checklist
 
-## Future work that may be required in bullet points
-
-<!--
-* There might be some optimizations to be made in ...
-* A lot of redundancy in this package, we might want to add a function `bool XYZ()` to reduce clutter
--->
+- [ ] The change has an agreed feature request or discussion, or is a bug fix or small improvement
+- [ ] Tests cover the change, and a bug fix comes with a test that fails without it
+- [ ] Breaking changes to messages, parameters or public APIs are marked with `!` in the title and described above
+- [ ] Docs updates needed on aerostack2.org are listed above, or none are needed
